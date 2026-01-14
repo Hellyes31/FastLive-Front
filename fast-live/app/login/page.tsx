@@ -18,20 +18,17 @@ export default function LoginPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     router.push("/streamPage");
-    // plus tard : appel API login
     console.log(form);
   };
 
   return (
     <main className="min-h-screen flex items-center justify-center bg-zinc-50 px-4">
       <div className="w-full max-w-md rounded-2xl bg-white/70 backdrop-blur-md border border-zinc-200 shadow-xl p-8">
-        {/* Logo */}
         <div className="text-center mb-6">
           <h1 className="text-5xl font-semibold italic tracking-tight text-zinc-900">
             Fast<span className="text-emerald-500">Live</span>
           </h1>
 
-          {/* Ligne verte */}
           <div className="mt-4 flex justify-center">
             <span className="h-[2px] w-16 bg-emerald-500 rounded-full" />
           </div>
@@ -41,7 +38,6 @@ export default function LoginPage() {
           </p>
         </div>
 
-        {/* Formulaire */}
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <input
             type="text"
@@ -50,19 +46,7 @@ export default function LoginPage() {
             value={form.username}
             onChange={handleChange}
             required
-            className="
-              rounded-xl
-              border border-zinc-300
-              bg-white
-              px-4 py-3
-              text-sm
-              placeholder-zinc-400
-              text-zinc-500
-              focus:outline-none
-              focus:ring-2
-              focus:ring-emerald-500
-              caret-emerald-500
-            "
+            className="rounded-xl border border-zinc-300 bg-whitepx-4 py-3 text-sm placeholder-zinc-400 text-zinc-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 caret-emerald-500"
           />
 
           <input
@@ -72,33 +56,12 @@ export default function LoginPage() {
             value={form.password}
             onChange={handleChange}
             required
-            className="
-              rounded-xl
-              border border-zinc-300
-              bg-white
-              px-4 py-3
-              text-sm
-              placeholder-zinc-400 
-              text-zinc-500
-              focus:outline-none
-              focus:ring-2
-              focus:ring-emerald-500
-              caret-emerald-500
-            "
+            className="rounded-xl border border-zinc-300 bg-whitepx-4 py-3 text-sm placeholder-zinc-400 text-zinc-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 caret-emerald-500"
           />
 
           <button
             type="submit"
-            className="
-              mt-2
-              rounded-xl
-              bg-emerald-500
-              py-3
-              font-semibold
-              text-white
-              hover:bg-emerald-600
-              transition
-            "
+            className="mt-2 rounded-xl bg-emerald-500 py-3 font-semibold text-white hover:bg-emerald-600 transition"
           >
             Se connecter
           </button>
