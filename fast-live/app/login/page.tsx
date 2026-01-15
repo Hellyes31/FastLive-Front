@@ -29,6 +29,17 @@ export default function LoginPage() {
         const text = await res.text();
         throw new Error(text);
       }
+      const data = await res.json();
+      console.log("Login response:", data);
+
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          userId: data.id,
+          username: data.username,
+          email: data.email,
+        })
+      );
       router.push("/streamPage");
     } catch (err) {
       console.error(err);
@@ -90,7 +101,6 @@ export default function LoginPage() {
           </button>
         </form>
 
-        {/* Lien inscription */}
         <p className="mt-6 text-center text-sm text-zinc-500">
           Pas encore de compte ?{" "}
           <button
