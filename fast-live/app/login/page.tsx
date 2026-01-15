@@ -6,20 +6,43 @@ import { useRouter } from "next/navigation";
 export default function LoginPage() {
   const router = useRouter();
 
-  const [form, setForm] = useState({
-    username: "",
-    password: "",
-  });
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    router.push("/streamPage");
+
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: form.username,
+          password: form.password,
+        }),
+      });
+
+      if (!res.ok) {
+        const text = await res.text();
+        throw new Error(text);
+      }
+      router.push("/streamPage");
+    } catch (err) {
+      console.error(err);
+      alert("Erreur lors de la connexion");
+      return;
+    }
+
     console.log(form);
   };
+
+  const [form, setForm] = useState({
+    username: "",
+    password: "",
+  });
 
   return (
     <main className="min-h-screen flex items-center justify-center bg-zinc-50 px-4">
@@ -46,7 +69,7 @@ export default function LoginPage() {
             value={form.username}
             onChange={handleChange}
             required
-            className="rounded-xl border border-zinc-300 bg-whitepx-4 py-3 text-sm placeholder-zinc-400 text-zinc-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 caret-emerald-500"
+            className="rounded-xl border border-zinc-300 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 placeholder-zinc-400 text-zinc-500"
           />
 
           <input
@@ -56,7 +79,7 @@ export default function LoginPage() {
             value={form.password}
             onChange={handleChange}
             required
-            className="rounded-xl border border-zinc-300 bg-whitepx-4 py-3 text-sm placeholder-zinc-400 text-zinc-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 caret-emerald-500"
+            className="rounded-xl border border-zinc-300 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 placeholder-zinc-400 text-zinc-500"
           />
 
           <button
