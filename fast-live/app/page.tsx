@@ -5,9 +5,41 @@ import { useState } from "react";
 
 export default function HomePage() {
   const router = useRouter();
-  const handleSubmit = (e: React.FormEvent) => {
+  
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    router.push("/login");
+
+    if (form.password !== form.confirmPassword) {
+      alert("Les mots de passe ne correspondent pas");
+      return;
+    }
+
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: form.username,
+            email: form.email,
+            password: form.password,
+          }),
+        }
+      );
+
+      if (!res.ok) {
+        const text = await res.text();
+        throw new Error(text);
+      }
+
+      router.push("/login");
+    } catch (err) {
+      console.error(err);
+      alert("Erreur lors de la création du compte");
+    }
   };
   const [form, setForm] = useState({
     username: "",
